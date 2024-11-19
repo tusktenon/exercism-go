@@ -17,7 +17,8 @@ func HasPassed(date string) bool {
 // IsAfternoonAppointment returns whether a time is in the afternoon.
 func IsAfternoonAppointment(date string) bool {
 	d, _ := time.Parse("Monday, January 2, 2006 15:04:05", date)
-	return 12 <= d.Hour() && d.Hour() < 18
+	h := d.Hour()
+	return 12 <= h && h < 18
 }
 
 // Description returns a formatted string of the appointment time.
