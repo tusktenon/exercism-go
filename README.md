@@ -15,6 +15,10 @@ The `math/rand` package provides a convenient `Shuffle` function.
 
 A very simple exercise, but also a nice showcase of Go's `switch` statement.
 
+### Chessboard
+
+Every function in my solution uses a bare return.
+
 ### Gross Store
 
 You can include a simple statement (like a variable declaration) with a tagless `switch`; just remember to add a semicolon after the statement. See the `RemoveItem` function for an example.
