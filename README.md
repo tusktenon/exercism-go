@@ -10,7 +10,6 @@ These are completed during the Go track's "Learning Mode" to illustrate importan
 
 The `math/rand` package provides a convenient `Shuffle` function.
 
-
 ### Blackjack
 
 A very simple exercise, but also a nice showcase of Go's `switch` statement.
@@ -18,6 +17,10 @@ A very simple exercise, but also a nice showcase of Go's `switch` statement.
 ### Chessboard
 
 Every function in my solution uses a bare return.
+
+### Election Day
+
+In Go, it's perfectly correct for a function to return a pointer to a local variable or a literal value (coming from C/C++, this is shocking).
 
 ### Gross Store
 
