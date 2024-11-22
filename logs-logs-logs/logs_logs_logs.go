@@ -21,15 +21,13 @@ func Application(log string) string {
 // to the caller.
 // NOTE: We could also just use the strings.ReplaceAll function.
 func Replace(log string, oldRune, newRune rune) string {
-	rs := make([]rune, 0, utf8.RuneCountInString(log))
-	for _, r := range log {
+	runes := []rune(log)
+	for i, r := range runes {
 		if r == oldRune {
-			rs = append(rs, newRune)
-		} else {
-			rs = append(rs, r)
+			runes[i] = newRune
 		}
 	}
-	return string(rs)
+	return string(runes)
 }
 
 // WithinLimit determines whether or not the number of characters in log is
