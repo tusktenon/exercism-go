@@ -30,6 +30,11 @@ You can include a simple statement (like a variable declaration) with a tagless 
 
 The `Quantities` function provides an opportunity to use a *bare return*.
 
+### Parsing Log Files
+
+Regular expressions in Go.
+
+
 ## Practice Exercises
 
 These are meant for students who've completed Learning Mode or otherwise acquired basic Go proficiency, and vary considerably in length and difficulty.
