@@ -10,8 +10,7 @@ const (
 )
 
 func (tu TemperatureUnit) String() string {
-	units := []string{"°C", "°F"}
-	return units[tu]
+	return []string{"°C", "°F"}[tu]
 }
 
 type Temperature struct {
@@ -31,8 +30,7 @@ const (
 )
 
 func (su SpeedUnit) String() string {
-	units := []string{"km/h", "mph"}
-	return units[su]
+	return []string{"km/h", "mph"}[su]
 }
 
 type Speed struct {
