@@ -34,6 +34,10 @@ The `Quantities` function provides an opportunity to use a *bare return*.
 
 Regular expressions in Go.
 
+### The Farm
+
+Custom error types in Go.
+
 
 ## Practice Exercises
 
