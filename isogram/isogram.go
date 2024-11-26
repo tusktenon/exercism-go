@@ -1,6 +1,16 @@
 package isogram
 
+import "unicode"
+
 func IsIsogram(word string) bool {
+	// allow unused implementations
+	_, _ = isIsogramBitFlag, isIsogramSet
+
+	// select an implementation
+	return isIsogramBitFlag(word)
+}
+
+func isIsogramBitFlag(word string) bool {
 	var seen, flag int32
 	for _, b := range []byte(word) {
 		flag = 0
@@ -9,12 +19,23 @@ func IsIsogram(word string) bool {
 		} else if 'A' <= b && b <= 'Z' {
 			flag = 1 << (b - 'A')
 		}
-		if flag != 0 {
-			if seen&flag != 0 {
+		if seen&flag != 0 {
+			return false
+		}
+		seen |= flag
+	}
+	return true
+}
+
+func isIsogramSet(word string) bool {
+	seen := map[rune]struct{}{}
+	for _, r := range word {
+		if unicode.IsLetter(r) {
+			r = unicode.ToLower(r)
+			if _, ok := seen[r]; ok {
 				return false
-			} else {
-				seen |= flag
 			}
+			seen[r] = struct{}{}
 		}
 	}
 	return true
