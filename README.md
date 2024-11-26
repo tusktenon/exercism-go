@@ -47,6 +47,10 @@ These are meant for students who've completed Learning Mode or otherwise acquire
 
 When the divisor is 2, there is a small but noticeable performance advantage in using bit operations instead of arithmetic ones (e.g., `n&1 == 0` instead of `n%2 == 0`, `n >>= 1` instead of `n /= 2`), at least for Go 1.23 on darwin/arm64.
 
+### Isogram
+
+Four different approaches with interesting performance differences. A good reminder that big-O analysis can be misleading when data sizes are small; a quadratic array-based solution can significantly outperform a linear hash-map-based one.
+
 ### Strain
 
 Generic functions in Go.
