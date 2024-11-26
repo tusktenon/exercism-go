@@ -1,7 +1,15 @@
 package strain
 
-// Implement the "Keep" and "Discard" function in this file.
+func Keep[T any](collection []T, predicate func(T) bool) []T {
+	result := make([]T, 0)
+	for _, t := range collection {
+		if predicate(t) {
+			result = append(result, t)
+		}
+	}
+	return result
+}
 
-// You will need typed parameters (aka "Generics") to solve this exercise.
-// They are not part of the Exercism syllabus yet but you can learn about
-// them here: https://go.dev/tour/generics/1
+func Discard[T any](collection []T, predicate func(T) bool) []T {
+	return Keep(collection, func(t T) bool { return !predicate(t) })
+}

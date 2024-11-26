@@ -46,3 +46,7 @@ These are meant for students who've completed Learning Mode or otherwise acquire
 ### Collatz Conjecture
 
 When the divisor is 2, there is a small but noticeable performance advantage in using bit operations instead of arithmetic ones (e.g., `n&1 == 0` instead of `n%2 == 0`, `n >>= 1` instead of `n /= 2`), at least for Go 1.23 on darwin/arm64.
+
+### Strain
+
+Generic functions in Go.
