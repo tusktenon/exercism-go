@@ -51,6 +51,10 @@ When the divisor is 2, there is a small but noticeable performance advantage in 
 
 Four different approaches with interesting performance differences. A good reminder that big-O analysis can be misleading when data sizes are small: a quadratic array-based solution can significantly outperform a linear hash-map-based one. Also, one of these solutions looks like it shouldn't work for non-ASCII strings, but actually does.
 
+### Leap
+
+Even the simplest of problems can have some room for optimization. Also, the README for this exercise explains how Exercism generates test data from a cross-language repository.
+
 ### Strain
 
 Generic functions in Go.
