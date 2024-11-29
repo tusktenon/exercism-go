@@ -8,7 +8,7 @@ func Valid(id string) bool {
 			count++
 			d := int(c - '0')
 			if count&1 == 0 {
-				d *= 2
+				d <<= 1
 				if d > 9 {
 					d -= 9
 				}
