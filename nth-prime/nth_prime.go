@@ -8,7 +8,7 @@ func Nth(n int) (int, error) {
 	_, _ = localList, sharedList
 
     // select an implementation
-	return sharedList(n)
+	return localList(n)
 }
 
 // localList stores the list of primes in a local variable. While this does

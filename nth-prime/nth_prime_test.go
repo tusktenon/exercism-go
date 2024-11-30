@@ -28,3 +28,16 @@ func BenchmarkNth(b *testing.B) {
 		Nth(10001)
 	}
 }
+
+// add a benchmark that better demonstrates the difference between the local
+// and shared list approaches
+func BenchmarkNthStepped(b *testing.B) {
+	if testing.Short() {
+		b.Skip("skipping benchmark in short mode.")
+	}
+	for i := 0; i < b.N; i++ {
+		for n := 1; n <= 10001; n += 10 {
+			Nth(n)
+		}
+	}
+}
