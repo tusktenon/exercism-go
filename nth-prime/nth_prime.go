@@ -1,6 +1,25 @@
 package prime
 
-// Nth returns the nth prime number. An error must be returned if the nth prime number can't be calculated ('n' is equal or less than zero)
+import "fmt"
+
+// Nth returns the nth prime number, or an error if n is less than 1
 func Nth(n int) (int, error) {
-	panic("Please implement the Nth function")
+	if n < 1 {
+		return 0, fmt.Errorf("expected a positive integer, got %v", n)
+	}
+	primes := make([]int, 0, n)
+	primes = append(primes, 2)
+outer:
+	for candidate := 3; len(primes) < n; candidate += 2 {
+		for _, p := range primes {
+			if p*p > candidate {
+				break
+			}
+			if candidate%p == 0 {
+				continue outer
+			}
+		}
+		primes = append(primes, candidate)
+	}
+	return primes[n-1], nil
 }
