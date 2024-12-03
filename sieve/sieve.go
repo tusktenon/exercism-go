@@ -1,19 +1,14 @@
 package sieve
 
 func Sieve(limit int) []int {
+	primes := []int{}
 	marked := make([]bool, limit+1)
-	marked[0], marked[1] = true, true
-	for i := 2; i*i <= limit; i++ {
+	for i := 2; i <= limit; i++ {
 		if !marked[i] {
+            primes = append(primes, i)
 			for j := i * i; j <= limit; j += i {
 				marked[j] = true
 			}
-		}
-	}
-	primes := []int{}
-	for i, m := range marked {
-		if !m {
-			primes = append(primes, i)
 		}
 	}
 	return primes
