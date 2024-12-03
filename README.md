@@ -55,6 +55,10 @@ Four different approaches with interesting performance differences. A good remin
 
 Even the simplest of problems can have some room for optimization. Also, the README for this exercise explains how Exercism generates test data from a cross-language repository.
 
+### Sieve
+
+As in the Sieve of Eratosthenes. The canonical structure for keeping track of the marked/unmarked numbers is a slice of bools, but just for fun, I also wrote a solution using a custom bit-array type to save memory.
+
 ### Strain
 
 Generic functions in Go.
