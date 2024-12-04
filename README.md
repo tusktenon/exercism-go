@@ -55,6 +55,10 @@ Four different approaches with interesting performance differences. A good remin
 
 Even the simplest of problems can have some room for optimization. Also, the README for this exercise explains how Exercism generates test data from a cross-language repository.
 
+### List Ops
+
+The classic functional, higher-order list functions (`map`, `filter`, `foldl`, `foldr`, `concat`, etc.), implemented with imperative techniques (for efficiency).
+
 ### Reverse String
 Using two loop variables instead of one makes the solution more expressive (and ever so slightly faster).
 
