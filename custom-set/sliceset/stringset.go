@@ -35,6 +35,8 @@ type Set struct{ elements []string }
 
 func New() Set { return Set{elements: []string{}} }
 
+func NewWithCapacity(c int) Set { return Set{elements: make([]string, 0, c)} }
+
 func NewFromSlice(l []string) Set {
 	// work from a copy to avoid mutating the source slice
 	c := make([]string, len(l))
@@ -61,8 +63,12 @@ func (s Set) String() string {
 	return `{"` + strings.Join(s.elements, `", "`) + `"}`
 }
 
+func (s Set) Len() int {
+	return len(s.elements)
+}
+
 func (s Set) IsEmpty() bool {
-	return len(s.elements) == 0
+	return s.Len() == 0
 }
 
 func (s Set) Has(elem string) bool {
@@ -83,11 +89,11 @@ func (s *Set) Add(elem string) {
 }
 
 func Subset(s1, s2 Set) bool {
-	if len(s1.elements) > len(s2.elements) {
+	if s1.Len() > s2.Len() {
 		return false
 	}
 	var i, j int
-	for i < len(s1.elements) && j < len(s2.elements) {
+	for i < s1.Len() && j < s2.Len() {
 		e1, e2 := s1.elements[i], s2.elements[j]
 		switch {
 		case e1 < e2:
@@ -99,11 +105,11 @@ func Subset(s1, s2 Set) bool {
 			j++
 		}
 	}
-	return i == len(s1.elements)
+	return i == s1.Len()
 }
 
 func Disjoint(s1, s2 Set) bool {
-	for i, j := 0, 0; i < len(s1.elements) && j < len(s2.elements); {
+	for i, j := 0, 0; i < s1.Len() && j < s2.Len(); {
 		e1, e2 := s1.elements[i], s2.elements[j]
 		switch {
 		case e1 < e2:
@@ -123,7 +129,7 @@ func Equal(s1, s2 Set) bool {
 
 func Intersection(s1, s2 Set) Set {
 	common := []string{}
-	for i, j := 0, 0; i < len(s1.elements) && j < len(s2.elements); {
+	for i, j := 0, 0; i < s1.Len() && j < s2.Len(); {
 		e1, e2 := s1.elements[i], s2.elements[j]
 		switch {
 		case e1 < e2:
@@ -142,7 +148,7 @@ func Intersection(s1, s2 Set) Set {
 func Difference(s1, s2 Set) Set {
 	diff := []string{}
 	var i, j int
-	for i < len(s1.elements) && j < len(s2.elements) {
+	for i < s1.Len() && j < s2.Len() {
 		e1, e2 := s1.elements[i], s2.elements[j]
 		switch {
 		case e1 < e2:
@@ -160,9 +166,9 @@ func Difference(s1, s2 Set) Set {
 }
 
 func Union(s1, s2 Set) Set {
-	either := make([]string, 0, max(len(s1.elements), len(s2.elements)))
+	either := make([]string, 0, max(s1.Len(), s2.Len()))
 	var i, j int
-	for i < len(s1.elements) && j < len(s2.elements) {
+	for i < s1.Len() && j < s2.Len() {
 		e1, e2 := s1.elements[i], s2.elements[j]
 		switch {
 		case e1 < e2:

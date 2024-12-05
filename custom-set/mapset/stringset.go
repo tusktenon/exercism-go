@@ -35,8 +35,12 @@ func (s Set) String() string {
 	return `{"` + strings.Join(elementList, `", "`) + `"}`
 }
 
+func (s Set) Len() int {
+	return len(s.elements)
+}
+
 func (s Set) IsEmpty() bool {
-	return len(s.elements) == 0
+	return s.Len() == 0
 }
 
 func (s Set) Has(e string) bool {
@@ -49,7 +53,7 @@ func (s *Set) Add(e string) {
 }
 
 func Subset(s1, s2 Set) bool {
-	return len(s1.elements) <= len(s2.elements) && subset(s1, s2)
+	return s1.Len() <= s2.Len() && subset(s1, s2)
 }
 
 func subset(s1, s2 Set) bool {
@@ -63,7 +67,7 @@ func subset(s1, s2 Set) bool {
 
 func Disjoint(s1, s2 Set) bool {
 	// it's faster to iterate through the smaller set
-	if len(s2.elements) < len(s1.elements) {
+	if s2.Len() < s1.Len() {
 		s1, s2 = s2, s1
 	}
 	for e := range s1.elements {
@@ -75,13 +79,13 @@ func Disjoint(s1, s2 Set) bool {
 }
 
 func Equal(s1, s2 Set) bool {
-	return len(s1.elements) == len(s2.elements) && subset(s1, s2)
+	return s1.Len() == s2.Len() && subset(s1, s2)
 }
 
 func Intersection(s1, s2 Set) Set {
 	intersection := New()
 	// it's faster to iterate through the smaller set
-	if len(s2.elements) < len(s1.elements) {
+	if s2.Len() < s1.Len() {
 		s1, s2 = s2, s1
 	}
 	for e := range s1.elements {
@@ -103,7 +107,7 @@ func Difference(s1, s2 Set) Set {
 }
 
 func Union(s1, s2 Set) Set {
-	union := NewWithCapacity(max(len(s1.elements), len(s2.elements)))
+	union := NewWithCapacity(max(s1.Len(), s2.Len()))
 	for e := range s1.elements {
 		union.Add(e)
 	}
