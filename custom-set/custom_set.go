@@ -4,29 +4,27 @@
 // Keeping the slice in sorted order allows most operations to be more
 // efficient. Specifically, if Sets s, s1 and s2 contain n, n1 and n2 elements,
 // respectively, we have the following bounds:
-//
-// - New(): O(1)
-// - NewFromSlice(src): O(m log(m)), where m = len(src)
-// - s.String(): O(n)
-// - s.IsEmpty(): O(1)
-// - s.Has: O(log(n))
-// - s.Add(e): O(n)
-// - Equal(s1, s2): O(min(n1, n2))
-// - Disjoint(s1, s2) and Subset(s1, s2): O(m + n)
-// - Difference(s1, s2), Intersection(s1, s2) and Union(s1, s2): O(m + n)
+//   - New(): O(1)
+//   - NewFromSlice(src): O(m log(m)), where m = len(src)
+//   - s.String(): O(n)
+//   - s.IsEmpty(): O(1)
+//   - s.Has: O(log(n))
+//   - s.Add(e): O(n)
+//   - Equal(s1, s2): O(min(n1, n2))
+//   - Disjoint(s1, s2) and Subset(s1, s2): O(n1 + n2)
+//   - Difference(s1, s2), Intersection(s1, s2) and Union(s1, s2): O(n1 + n2)
 //
 // NOTE: Since Go does not have a built-in set type, a completely reasonable
 // approach to this exercise is to implement Set as a thin wrapper around
 // map[string]struct{}. However, the sorted string slice implementation
-// - is a more interesting challenge;
-// - makes for a better comparison with the same exercise in other language
-//   tracks (most languages have a built-in set type);
-// - might outperform the map-based approach in certain situations (e.g, when
-//   sets are small and calls to Add are uncommon).
+//   - is a more interesting challenge;
+//   - makes for a better comparison with the same exercise in other language
+//     tracks (most languages have a built-in set type);
+//   - might outperform the map-based approach in certain situations (e.g, when
+//     sets are small and calls to Add are uncommon).
 package stringset
 
 import (
-	"fmt"
 	"reflect"
 	"slices"
 	"sort"
@@ -52,26 +50,17 @@ func NewFromSlice(l []string) Set {
 	for _, curr := range c[1:] {
 		if curr != prev {
 			dedup = append(dedup, curr)
+			prev = curr
 		}
-		prev = curr
 	}
 	return Set{elements: dedup}
 }
 
-// For Set.String, use '{' and '}', output elements as double-quoted strings
-// safely escaped with Go syntax, and use a comma and a single space between
-// elements. For example, a set with 2 elements, "a" and "b", should be
-// formatted as {"a", "b"}. Format the empty set as {}.
 func (s Set) String() string {
-	var b strings.Builder
-	b.WriteByte('{')
-	prefix := ""
-	for _, e := range s.elements {
-		fmt.Fprintf(&b, "%s\"%s\"", prefix, e)
-		prefix = ", "
+	if s.IsEmpty() {
+		return "{}"
 	}
-	b.WriteByte('}')
-	return b.String()
+	return `{"` + strings.Join(s.elements, `", "`) + `"}`
 }
 
 func (s Set) IsEmpty() bool {
