@@ -47,6 +47,34 @@ These are meant for students who've completed Learning Mode or otherwise acquire
 
 When the divisor is 2, there is a small but noticeable performance advantage in using bit operations instead of arithmetic ones (e.g., `n&1 == 0` instead of `n%2 == 0`, `n >>= 1` instead of `n /= 2`), at least for Go 1.23 on darwin/arm64.
 
+### Custom Set
+
+This exercise appears in many language tracks. Since most languages already provide a built-in set type, people typically implement their custom set with a resizable array (`vector` in C++, `ArrayList` in Java, `Vec` in Rust, etc.); since Go lacks a built-in set type, it's completely reasonable to implement the custom set as a simple wrapper around `map[string]struct{}`.
+
+I also have to mention a great solution to the common task of pretty-printing a custom collection type. I had originally implemented the `String` method with the classic reset-the-prefix approach:
+```go
+func (s Set) Strin1() string {
+	var b strings.Builder
+	b.WriteByte('{')
+	prefix := ""
+	for _, e := range s.elements {
+		fmt.Fprintf(&b, "%s\"%s\"", prefix, e)
+		prefix = ", "
+	}
+	b.WriteByte('}')
+	return b.String()
+}
+```
+But then I saw this [lovely implementation](https://exercism.org/tracks/go/exercises/custom-set/solutions/martinohmann) among the community solutions, which reminded me of the `strings.Join` function:
+```go
+func (s Set) String() string {
+	if s.IsEmpty() {
+		return "{}"
+	}
+	return `{"` + strings.Join(s.elements, `", "`) + `"}`
+}
+```
+
 ### Isogram
 
 Four different approaches with interesting performance differences. A good reminder that big-O analysis can be misleading when data sizes are small: a quadratic array-based solution can significantly outperform a linear hash-map-based one. Also, one of these solutions looks like it shouldn't work for non-ASCII strings, but actually does.
