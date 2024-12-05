@@ -33,9 +33,7 @@ import (
 
 type Set struct{ elements []string }
 
-func New() Set {
-	return Set{elements: []string{}}
-}
+func New() Set { return Set{elements: []string{}} }
 
 func NewFromSlice(l []string) Set {
 	// work from a copy to avoid mutating the source slice

@@ -49,7 +49,7 @@ When the divisor is 2, there is a small but noticeable performance advantage in 
 
 ### Custom Set
 
-This exercise appears in many language tracks. Since most languages already provide a built-in set type, people typically implement their custom set with a resizable array (`vector` in C++, `ArrayList` in Java, `Vec` in Rust, etc.); since Go lacks a built-in set type, it's completely reasonable to implement the custom set as a simple wrapper around `map[string]struct{}`.
+This exercise appears in many language tracks. Since most languages already provide a built-in set type, people typically implement their custom set with a resizable array (`vector` in C++, `ArrayList` in Java, `Vec` in Rust, etc.); since Go lacks a built-in set type, it's completely reasonable to implement the custom set as a simple wrapper around `map[string]struct{}`. I did it both ways.
 
 I also have to mention a great solution to the common task of pretty-printing a custom collection type. I had originally implemented the `String` method with the classic reset-the-prefix approach:
 ```go
