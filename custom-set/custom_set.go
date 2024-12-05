@@ -1,4 +1,28 @@
 // Package stringset implements a Set as a collection of unique string values.
+// Internally, Set elements are stored in a sorted string slice.
+//
+// Keeping the slice in sorted order allows most operations to be more
+// efficient. Specifically, if Sets s, s1 and s2 contain n, n1 and n2 elements,
+// respectively, we have the following bounds:
+//
+// - New(): O(1)
+// - NewFromSlice(src): O(m log(m)), where m = len(src)
+// - s.String(): O(n)
+// - s.IsEmpty(): O(1)
+// - s.Has: O(log(n))
+// - s.Add(e): O(n)
+// - Equal(s1, s2): O(min(n1, n2))
+// - Disjoint(s1, s2) and Subset(s1, s2): O(m + n)
+// - Difference(s1, s2), Intersection(s1, s2) and Union(s1, s2): O(m + n)
+//
+// NOTE: Since Go does not have a built-in set type, a completely reasonable
+// approach to this exercise is to implement Set as a thin wrapper around
+// map[string]struct{}. However, the sorted string slice implementation
+// - is a more interesting challenge;
+// - makes for a better comparison with the same exercise in other language
+//   tracks (most languages have a built-in set type);
+// - might outperform the map-based approach in certain situations (e.g, when
+//   sets are small and calls to Add are uncommon).
 package stringset
 
 import (
@@ -9,7 +33,6 @@ import (
 	"strings"
 )
 
-// Implement the Set type using a sorted string slice.
 type Set struct{ elements []string }
 
 func New() Set {
