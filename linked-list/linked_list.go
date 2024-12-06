@@ -2,7 +2,6 @@ package linkedlist
 
 import "errors"
 
-// Define List and Node types here.
 type List struct {
 	head, tail *Node
 }
@@ -34,26 +33,26 @@ func (n *Node) Prev() *Node {
 
 // Unshift inserts a value at the front of the list.
 func (l *List) Unshift(v interface{}) {
-	newhead := Node{Value: v, next: l.head}
+	newhead := &Node{Value: v, next: l.head}
 	if l.head == nil {
 		// list is currently empty
-		l.tail = &newhead
+		l.tail = newhead
 	} else {
-		l.head.prev = &newhead
+		l.head.prev = newhead
 	}
-	l.head = &newhead
+	l.head = newhead
 }
 
 // Push inserts a value at the back of the list.
 func (l *List) Push(v interface{}) {
-	newtail := Node{Value: v, prev: l.tail}
+	newtail := &Node{Value: v, prev: l.tail}
 	if l.tail == nil {
 		// list is currently empty
-		l.head = &newtail
+		l.head = newtail
 	} else {
-		l.tail.next = &newtail
+		l.tail.next = newtail
 	}
-	l.tail = &newtail
+	l.tail = newtail
 }
 
 // Shift removes the value at the front of the list, returning an error if the
@@ -92,9 +91,8 @@ func (l *List) Pop() (interface{}, error) {
 
 func (l *List) Reverse() {
 	for curr := l.head; curr != nil; {
-		next := curr.next
 		curr.prev, curr.next = curr.next, curr.prev
-		curr = next
+		curr = curr.prev
 	}
 	l.head, l.tail = l.tail, l.head
 }
