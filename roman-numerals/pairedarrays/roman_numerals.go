@@ -1,3 +1,9 @@
+// Package romannumerals converts Arabic numbers (as ints) to Roman numerals
+// (as strings).
+//
+// This version stores the conversion data in a pair of arrays of types int and
+// string. Compared to using a single array of struct type, this paired-arrays
+// approach feels slightly less elegant, but also runs slightly faster.
 package romannumerals
 
 import (

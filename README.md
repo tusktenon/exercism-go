@@ -83,6 +83,9 @@ Four different approaches with interesting performance differences. A good remin
 
 Even the simplest of problems can have some room for optimization. Also, the README for this exercise explains how Exercism generates test data from a cross-language repository.
 
+### Linked List
+The classic doubly linked list, suitable for implementing a deque.
+
 ### List Ops
 
 The classic functional, higher-order list functions (`map`, `filter`, `foldl`, `foldr`, `concat`, etc.), implemented with imperative techniques (for efficiency).
@@ -90,9 +93,15 @@ The classic functional, higher-order list functions (`map`, `filter`, `foldl`, `
 ### Reverse String
 Using two loop variables instead of one makes the solution more expressive (and ever so slightly faster).
 
+### Roman Numerals
+We can store the Arabic-to-Roman conversions in a pair of arrays (of types `int` and `string`), or a single array of `struct` type. The latter feels a little safer and more expressive, but the former runs slightly faster.
+
 ### Sieve
 
 As in the Sieve of Eratosthenes. The canonical structure for keeping track of the marked/unmarked numbers is a slice of bools, but just for fun, I also wrote a solution using a custom bit-array type to save memory.
+
+### Simple Linked List
+The classic singly linked list (with no tail pointer), suitable for implementing a stack.
 
 ### Strain
 
