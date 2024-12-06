@@ -94,8 +94,7 @@ func Subset(s1, s2 Set) bool {
 	}
 	var i, j int
 	for i < s1.Len() && j < s2.Len() {
-		e1, e2 := s1.elements[i], s2.elements[j]
-		switch {
+		switch e1, e2 := s1.elements[i], s2.elements[j]; {
 		case e1 < e2:
 			return false
 		case e1 == e2:
@@ -110,8 +109,7 @@ func Subset(s1, s2 Set) bool {
 
 func Disjoint(s1, s2 Set) bool {
 	for i, j := 0, 0; i < s1.Len() && j < s2.Len(); {
-		e1, e2 := s1.elements[i], s2.elements[j]
-		switch {
+		switch e1, e2 := s1.elements[i], s2.elements[j]; {
 		case e1 < e2:
 			i++
 		case e1 == e2:
@@ -130,8 +128,7 @@ func Equal(s1, s2 Set) bool {
 func Intersection(s1, s2 Set) Set {
 	common := []string{}
 	for i, j := 0, 0; i < s1.Len() && j < s2.Len(); {
-		e1, e2 := s1.elements[i], s2.elements[j]
-		switch {
+		switch e1, e2 := s1.elements[i], s2.elements[j]; {
 		case e1 < e2:
 			i++
 		case e1 == e2:
@@ -149,8 +146,7 @@ func Difference(s1, s2 Set) Set {
 	diff := []string{}
 	var i, j int
 	for i < s1.Len() && j < s2.Len() {
-		e1, e2 := s1.elements[i], s2.elements[j]
-		switch {
+		switch e1, e2 := s1.elements[i], s2.elements[j]; {
 		case e1 < e2:
 			diff = append(diff, e1)
 			i++
@@ -169,8 +165,7 @@ func Union(s1, s2 Set) Set {
 	either := make([]string, 0, max(s1.Len(), s2.Len()))
 	var i, j int
 	for i < s1.Len() && j < s2.Len() {
-		e1, e2 := s1.elements[i], s2.elements[j]
-		switch {
+		switch e1, e2 := s1.elements[i], s2.elements[j]; {
 		case e1 < e2:
 			either = append(either, e1)
 			i++
