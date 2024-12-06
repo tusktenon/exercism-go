@@ -15,13 +15,9 @@ func ToRomanNumeral(n int) (string, error) {
 		return "", fmt.Errorf("out of range: %d", n)
 	}
 	var b strings.Builder
-	for n > 0 {
-		for i, a := range arabic {
-			if n >= a {
-				b.WriteString(roman[i])
-				n -= a
-				break
-			}
+	for i, a := range arabic {
+		for ; n >= a; n -= a {
+			b.WriteString(roman[i])
 		}
 	}
 	return b.String(), nil
