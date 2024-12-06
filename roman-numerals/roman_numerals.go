@@ -5,19 +5,33 @@ import (
 	"strings"
 )
 
-var (
-	arabic = [13]int{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1}
-	roman  = [13]string{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"}
-)
+var conversions = [...]struct {
+	arabic int
+	roman  string
+}{
+	{1000, "M"},
+	{900, "CM"},
+	{500, "D"},
+	{400, "CD"},
+	{100, "C"},
+	{90, "XC"},
+	{50, "L"},
+	{40, "XL"},
+	{10, "X"},
+	{9, "IX"},
+	{5, "V"},
+	{4, "IV"},
+	{1, "I"},
+}
 
 func ToRomanNumeral(n int) (string, error) {
 	if n < 1 || n > 3999 {
 		return "", fmt.Errorf("out of range: %d", n)
 	}
 	var b strings.Builder
-	for i, a := range arabic {
-		for ; n >= a; n -= a {
-			b.WriteString(roman[i])
+	for _, c := range conversions {
+		for ; n >= c.arabic; n -= c.arabic {
+			b.WriteString(c.roman)
 		}
 	}
 	return b.String(), nil
