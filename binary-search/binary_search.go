@@ -1,5 +1,15 @@
 package binarysearch
 
 func SearchInts(list []int, key int) int {
-	panic("Please implement the SearchInts function")
+	for left, right := 0, len(list)-1; left <= right; {
+		switch mid := (left + right) / 2; {
+		case list[mid] < key:
+			left = mid + 1
+		case list[mid] == key:
+			return mid
+		case list[mid] > key:
+			right = mid - 1
+		}
+	}
+	return -1
 }
