@@ -2,6 +2,10 @@
 // readable code, but is probably unwise all the same. Note that "The Go
 // Programming Languages" (p. 233) specifically warns against using a buffered
 // channel as a queue, and recommends a slice-based implementation instead.
+//
+// Unsurprisingly, this implementation has far worse performance than either of
+// the slice-based approaches (presumably because of all the thread safety
+// that's built into channels but not needed here).
 package circular
 
 import "errors"

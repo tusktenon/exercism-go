@@ -1,10 +1,19 @@
 // This implementation uses the slice operator to remove the element at the
 // front of the buffer and the built-in append function to add an element at
-// the end. It's a popular community solution, and the code is more succinct
-// and readable than the "standard" implementation (a fixed data slice with
-// modular indexing), but it suffers from a major performance disadvantage: as
-// the data slice "shifts to the right" with multiple writes and reads, it must
-// be repeatedly reallocated.
+// the end.
+//
+// This is a popular community solution, and the code is more succinct and
+// readable than the "fixed-slice" implementation, but it would appear to
+// suffer from a major performance disadvantage: as the data slice "shifts to
+// the right" with multiple writes and reads, it must be repeatedly
+// reallocated.
+//
+// In actual benchmarking, however, this implementation is noticeably faster
+// than the fixed-slice approach. I even wrote an additional benchmark that
+// more heavily favours the fixed-slice solution: a low-capacity buffer with a
+// long sequence of write/read calls. But even as this benchmark confirmed that
+// the fixed-slice solution produces no additional allocations while the
+// sliding-slice one does, the latter continued to run faster.
 package circular
 
 import "errors"

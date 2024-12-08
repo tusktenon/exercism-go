@@ -8,8 +8,10 @@ import (
 // Here is one way you can have a test case verify that the expected
 // interfaces are implemented.
 
-var _ io.ByteReader = new(Buffer)
-var _ io.ByteWriter = new(Buffer)
+var (
+	_ io.ByteReader = new(Buffer)
+	_ io.ByteWriter = new(Buffer)
+)
 
 // testBuffer and methods support the tests, providing log and fail messages.
 
@@ -194,6 +196,29 @@ func BenchmarkWriteRead(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		c.WriteByte(0)
 		c.ReadByte()
+	}
+	b.SetBytes(int64(b.N))
+}
+
+// Add a benchmark that can capture the difference between the fixed and
+// "sliding" slice approaches.
+func BenchmarkWriteReadSliding(b *testing.B) {
+	if testing.Short() {
+		b.Skip("skipping benchmark in short mode.")
+	}
+	c := NewBuffer(8)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		for j := 0; j < 8*20; j++ {
+			c.WriteByte(0)
+			c.WriteByte(1)
+			c.WriteByte(2)
+			c.WriteByte(3)
+			c.ReadByte()
+			c.ReadByte()
+			c.ReadByte()
+			c.ReadByte()
+		}
 	}
 	b.SetBytes(int64(b.N))
 }

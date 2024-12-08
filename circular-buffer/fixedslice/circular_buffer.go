@@ -4,6 +4,12 @@
 // We chose the provided API so that Buffer implements io.ByteReader and
 // io.ByteWriter and can be used (size permitting) as a drop in replacement for
 // anything using that interface.
+//
+// This "standard" approach uses a fixed slice with modular indexing.
+// Surprisingly, this implementation is noticeably slower in benchmarking than
+// the "sliding slice" approach (even while benchmarking also confirms that the
+// fixed-slice solution produces no additional allocations, while the
+// sliding-slice one does).
 package circular
 
 import "errors"
