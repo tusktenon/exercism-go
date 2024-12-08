@@ -43,6 +43,22 @@ Custom error types in Go.
 
 These are meant for students who've completed Learning Mode or otherwise acquired basic Go proficiency, and vary considerably in length and difficulty.
 
+### Binary Search
+
+The classic binary search algorithm, implemented in both the closed and half-open styles.
+
+### Circular Buffer
+
+The classic circular buffer, implemented three ways:
+
+- the classic fixed-sized slice with modular indexing;
+- the "sliding slice", using the subslice operator to remove the element at the front and the `append` function to add an element at the back;
+- using a buffered channel.
+
+Compared to the fixed slice approach, the sliding slice has more concise and readable code, but the backing slice has to be reallocated as it "slides to the right" with repeated write and read calls. Surprisingly, it actually outperforms the fixed-slice solution in the benchmarks, despite the additional allocations.
+
+Using a buffered channel to implement a simple queue is tempting in Go (which has no built-in queue type, but does have beautiful syntax for sending and receiving on channels), but unwise (see *The Go Programming Language* p. 233). This implementation did far worse in the benchmarks than either of the slice-based ones, presumably because of all the thread safety that's built into channels but not needed here.
+
 ### Collatz Conjecture
 
 When the divisor is 2, there is a small but noticeable performance advantage in using bit operations instead of arithmetic ones (e.g., `n&1 == 0` instead of `n%2 == 0`, `n >>= 1` instead of `n /= 2`), at least for Go 1.23 on darwin/arm64.
