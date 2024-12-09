@@ -33,11 +33,13 @@ func (bst *BinarySearchTree) Insert(i int) {
 // A BinarySearchTree that has the numbers [1,3,7,5] added will return the
 // []int [1,3,5,7].
 func (bst *BinarySearchTree) SortedData() []int {
-	if bst == nil {
-		return []int{}
+	sorted := []int{}
+	if bst.left != nil {
+		sorted = append(sorted, bst.left.SortedData()...)
 	}
-	return append(
-		append(bst.left.SortedData(), bst.data),
-		bst.right.SortedData()...,
-	)
+	sorted = append(sorted, bst.data)
+	if bst.right != nil {
+		sorted = append(sorted, bst.right.SortedData()...)
+	}
+	return sorted
 }

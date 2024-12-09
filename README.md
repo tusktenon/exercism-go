@@ -47,6 +47,10 @@ These are meant for students who've completed Learning Mode or otherwise acquire
 
 The classic binary search algorithm, implemented in both the closed and half-open styles.
 
+### Binary Search Tree
+
+A simple binary search tree.
+
 ### Circular Buffer
 
 The classic circular buffer, implemented three ways:
