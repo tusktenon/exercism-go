@@ -95,6 +95,10 @@ func (s Set) String() string {
 }
 ```
 
+### Flatten Array
+
+Recall that type switches provide a `nil` case. Very useful!
+
 ### Isogram
 
 Four different approaches with interesting performance differences. A good reminder that big-O analysis can be misleading when data sizes are small: a quadratic array-based solution can significantly outperform a linear hash-map-based one. Also, one of these solutions looks like it shouldn't work for non-ASCII strings, but actually does.

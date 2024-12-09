@@ -18,7 +18,7 @@ func flatten1(nested any) []any {
 		if len(nested) == 0 {
 			return []any{}
 		}
-		return append(Flatten(nested[0]), Flatten(nested[1:])...)
+		return append(flatten1(nested[0]), flatten1(nested[1:])...)
 	default:
 		return []any{nested}
 	}
