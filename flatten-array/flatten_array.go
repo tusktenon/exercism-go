@@ -5,27 +5,28 @@ func Flatten(nested interface{}) []interface{} {
 	_, _ = flatten1, flatten2
 
 	// select an implementation
-	return flatten1(nested)
+	return flatten2(nested)
 }
 
 // Option 1: A "pure" functional approach (no mutation).
-// Runs slower and performs more memory allocations.
+// Runs slower, uses more memory and performs more allocations.
 func flatten1(nested interface{}) []interface{} {
-	if nested == nil {
+	switch nested := nested.(type) {
+	case nil:
 		return []interface{}{}
-	}
-	if s, ok := nested.([]interface{}); ok {
-		if len(s) == 0 {
+	case []interface{}:
+		if len(nested) == 0 {
 			return []interface{}{}
 		}
-		return append(Flatten(s[0]), Flatten(s[1:])...)
+		return append(Flatten(nested[0]), Flatten(nested[1:])...)
+	default:
+		return []interface{}{nested}
 	}
-	return []interface{}{nested}
 }
 
 // Option 2: Combine recursion with iteration.
 func flatten2(nested interface{}) []interface{} {
-    flattened := []interface{}{}
+	flattened := []interface{}{}
 	switch nested := nested.(type) {
 	case nil: // omit nil entries
 	case []interface{}:
