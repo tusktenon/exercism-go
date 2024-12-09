@@ -24,17 +24,18 @@ func flatten1(nested interface{}) []interface{} {
 	}
 }
 
-// Option 2: Combine recursion with iteration.
+// Option 2: Combine recursion and iteration.
 func flatten2(nested interface{}) []interface{} {
-	flattened := []interface{}{}
 	switch nested := nested.(type) {
-	case nil: // omit nil entries
+	case nil:
+		return []interface{}{}
 	case []interface{}:
+		flattened := []interface{}{}
 		for _, e := range nested {
 			flattened = append(flattened, flatten2(e)...)
 		}
+		return flattened
 	default:
-		flattened = append(flattened, nested)
+		return []interface{}{nested}
 	}
-	return flattened
 }
