@@ -49,7 +49,7 @@ The classic binary search algorithm, implemented in both the closed and half-ope
 
 ### Binary Search Tree
 
-A simple binary search tree.
+A simple binary search tree, with no deletion or rebalancing.
 
 ### Circular Buffer
 
@@ -113,6 +113,19 @@ The classic doubly linked list, suitable for implementing a deque.
 ### List Ops
 
 The classic functional, higher-order list functions (`map`, `filter`, `foldl`, `foldr`, `concat`, etc.), implemented with imperative techniques (for efficiency).
+
+### Parallel Letter Frequency
+
+Go's built-in concurrency features really shine here: goroutines and channels make this exercise embarrassingly easy. I experimented with two approaches to merging the maps into a final result.
+
+Looking through the community solutions, I found that many users used a *buffered* channel, with a capacity equal to the number of strings to be processed: `ch := make(chan FreqMap, len(texts))`. There's really no reason to use a buffered channel here:
+
+- on the sending side, the very last thing each worker goroutine does is send the frequency map for their text, so it's fine if they block here while waiting for the channel to clear.
+- on the receiving side, the main goroutine can only process (merge) one frequency map at a time.
+
+Using a buffered channel still produces the correct result, but does impose a small time and memory cost (verified with benchmarking), so best not to use one where it isn't needed.
+
+Also note that most of the community solutions were written before the "loop variable capture" issue [was fixed in Go 1.22](https://go.dev/blog/loopvar-preview), so the function passed to each goroutine takes a (seemingly unnecessary) string argument.
 
 ### Reverse String
 Using two loop variables instead of one makes the solution more expressive (and ever so slightly faster).
