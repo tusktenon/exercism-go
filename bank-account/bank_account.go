@@ -18,10 +18,7 @@ func Open(amount int64) *Account {
 func (a *Account) Balance() (int64, bool) {
 	a.mu.Lock()
 	defer a.mu.Unlock()
-	if a.closed {
-		return 0, false
-	}
-	return a.balance, true
+	return a.balance, !a.closed
 }
 
 func (a *Account) Deposit(amount int64) (int64, bool) {

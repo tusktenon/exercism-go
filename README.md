@@ -43,6 +43,9 @@ Custom error types in Go.
 
 These are meant for students who've completed Learning Mode or otherwise acquired basic Go proficiency, and vary considerably in length and difficulty.
 
+### Bank Account
+Go's `defer` statement makes working with mutex locks much simpler.
+
 ### Binary Search
 
 The classic binary search algorithm, implemented in both the closed and half-open styles.
