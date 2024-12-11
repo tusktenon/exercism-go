@@ -17,12 +17,13 @@ func SolvePuzzle() Solution {
 // house properties, ruling out candidates as early as possible to minimize the
 // total number of iterations required.
 func solve() Solution {
-	for _, colors := range permuteFive() {
+	pFive := permuteFive()
+	for _, colors := range pFive() {
 		// 6. The green house is immediately to the right of the ivory house.
 		if colors[Green]-colors[Ivory] != 1 {
 			continue
 		}
-		for _, nations := range permuteFive() {
+		for _, nations := range pFive() {
 			// 10. The Norwegian lives in the first house.
 			ok := nations[Norwegian] == 0 &&
 				// 2. The Englishman lives in the red house.
@@ -32,12 +33,12 @@ func solve() Solution {
 			if !ok {
 				continue
 			}
-			for _, pets := range permuteFive() {
+			for _, pets := range pFive() {
 				// 3. The Spaniard owns the dog.
 				if nations[Spaniard] != pets[Dog] {
 					continue
 				}
-				for _, drinks := range permuteFive() {
+				for _, drinks := range pFive() {
 					// 9. Milk is drunk in the middle house.
 					ok := drinks[Milk] == 2 &&
 						// 4. Coffee is drunk in the green house.
@@ -47,7 +48,7 @@ func solve() Solution {
 					if !ok {
 						continue
 					}
-					for _, smokes := range permuteFive() {
+					for _, smokes := range pFive() {
 						// 7. The Old Gold smoker owns snails.
 						ok := smokes[OldGold] == pets[Snails] &&
 							// 8. Kools are smoked in the yellow house.
@@ -76,11 +77,12 @@ func solve() Solution {
 // 24.9 billion possibilities), but a modern PC can still arrive at the correct
 // solution in under 2 minutes.
 func solveBrute() Solution {
-	for _, colors := range permuteFive() {
-		for _, nations := range permuteFive() {
-			for _, pets := range permuteFive() {
-				for _, drinks := range permuteFive() {
-					for _, smokes := range permuteFive() {
+	pFive := permuteFive()
+	for _, colors := range pFive() {
+		for _, nations := range pFive() {
+			for _, pets := range pFive() {
+				for _, drinks := range pFive() {
+					for _, smokes := range pFive() {
 						// 1. There are five houses. (Always true.)
 						// 2. The Englishman lives in the red house.
 						ok := nations[Englishman] == colors[Red] &&
@@ -188,21 +190,22 @@ func nextTo(x, y uint8) bool {
 	return (x == y+1) || (y == x+1)
 }
 
-// permuteFive returns a slice containing all 120 (5!) permutations of
-// (0, 1, 2, 3, 4).
-func permuteFive() [][]uint8 {
-	return permutations([]uint8{0, 1, 2, 3, 4})
-}
-
-// factorial is a simple implementation of the factorial function
-// NOTE: A robust implementation would check that n is neither negative nor so
-// large that n! will overflow.
-func factorial(n int) int {
-	fact := 1
-	for ; n > 1; n-- {
-		fact *= n
+// permuteFive returns a function that returns a slice containing all 120 (5!)
+// permutations of (0, 1, 2, 3, 4). For speed, the slice of permutations is
+// generated only once (via the permutations function) and then acts as a
+// template: each call to the returned function makes and returns a (deep)
+// copy.
+func permuteFive() func() [][]uint8 {
+	template := permutations([]uint8{0, 1, 2, 3, 4})
+	return func() [][]uint8 {
+		tCopy := make([][]uint8, 0, 120)
+		for _, p := range template {
+			pCopy := make([]uint8, 5)
+			copy(pCopy, p)
+			tCopy = append(tCopy, pCopy)
+		}
+		return tCopy
 	}
-	return fact
 }
 
 // permutations takes a slice `list` of length n and returns a slice containing
@@ -232,4 +235,15 @@ func permutations[T any](list []T) [][]T {
 
 	helper(list, len(list))
 	return result
+}
+
+// factorial is a simple implementation of the factorial function
+// NOTE: A robust implementation would check that n is neither negative nor so
+// large that n! will overflow.
+func factorial(n int) int {
+	fact := 1
+	for ; n > 1; n-- {
+		fact *= n
+	}
+	return fact
 }
