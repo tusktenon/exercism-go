@@ -73,10 +73,10 @@ func solve() Solution {
 	panic("no solution found")
 }
 
-// In this implementation, we test all the rules at once, in the innermost
-// loop. This is extremely inefficient (we might have to consider all 5!^5 ~
-// 24.9 billion possibilities), but a modern PC can still arrive at the correct
-// solution in under 2 minutes.
+// In this implementation (included only for reference), we test all the rules
+// at once, in the innermost loop. This is extremely inefficient (we might have
+// to consider all 5!^5 ~ 24.9 billion possibilities), but a modern PC can
+// still arrive at the correct solution in under 2 minutes.
 func solveBrute() Solution {
 	pFive := permuteFive()
 	for _, colors := range pFive() {
