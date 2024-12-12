@@ -2,6 +2,36 @@
 
 These are my solutions to the exercises of the [Go track](https://exercism.org/tracks/go) on [Exercism](https://exercism.org).
 
+
+## Completing Exercises
+
+Remember to do an initial commit after downloading the exercise. Once you think you have a working solution, verify with `go test`. Most of the exercises in the Go track include some benchmark tests; you can run these with `go test -bench .` (if you're just interested in execution speed) or `go test -bench . --benchmem` (to add memory use and allocation stats).
+
+The `go.mod` file that comes with the exercises is set to Go 1.18, but I often like to use features from Go 1.21 and 1.22 (in particular, the built-in `min`, `max` and `clear` functions; the [fix for the "loop variable capture" issue](https://go.dev/blog/loopvar-preview); and `for` loops that can `range` over an `int`). Exercism supports Go 1.22, but you must submit your modified `go.mod` along with your main `.go` file.
+
+### Handling Multiple Solutions
+
+I often like to write several solutions to an exercise, either to explore specific language features or to compare performance characteristics. Go is *very* strict about unused unexported ("private") variables, including functions: if it starts with a lowercase letter and you don't use it, it's an error. In a real-world program, this is great, but it makes alternate implementations a little trickier.
+
+If the exercise only has one or two exported functions, I just write all the alternates as unexported functions in the same file. The exported function is then just used as a wrapper to select one of the options, with blank assignments to suppress the "unused" errors:
+
+```go
+func TheFunction(x int, y string) bool {
+	// allow unused implementations
+	_, _ = theFunctionA, theFunctionB
+	_ = theFunctionC
+	_ = theFunctionD
+
+	// select an implementation
+	return theFunctionA(x, y)
+}
+```
+
+If the exercise has more than a few exported types and functions (e.g., you're writing a custom type with a number of methods), I place each implementation in its own subfolder and just symlink one of them to the parent folder. If you expect to switch between implementations later (perhaps to compare benchmark results), it's also worth adding a `.gitignore` containing the symlink target. See the [Circular Buffer](circular-buffer) exercise for an example.
+
+Admittedly, this all feels a little suspect to me. If someone knows of a better way to handle these situations, please let me know!
+
+
 ## Learning Exercises
 
 These are completed during the Go track's "Learning Mode" to illustrate important language [concepts](https://exercism.org/tracks/go/concepts). They're invariably short and simple, and there generally aren't too many reasonable ways to solve them, but they can provide nice examples of Go features and built-in functions.
