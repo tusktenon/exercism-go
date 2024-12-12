@@ -126,17 +126,13 @@ func solveBrute() Solution {
 
 // getSolution extracts a Solution object from slices containing the correct
 // house assignments for nationalities, drinks and pets.
-func getSolution(nations, drinks, pets []uint8) (s Solution) {
-	nationStrings := []string{"Englishman", "Japanese", "Norwegian", "Spaniard", "Ukrainian"}
-	for i, house := range nations {
-		if house == drinks[Water] {
-			s.DrinksWater = nationStrings[i]
-		}
-		if house == pets[Zebra] {
-			s.OwnsZebra = nationStrings[i]
-		}
+func getSolution(nations, drinks, pets []uint8) Solution {
+	s := [5]string{"Englishman", "Japanese", "Norwegian", "Spaniard", "Ukrainian"}
+	var m [5]string
+	for i := range 5 {
+		m[nations[i]] = s[i]
 	}
-	return
+	return Solution{DrinksWater: m[drinks[Water]], OwnsZebra: m[pets[Zebra]]}
 }
 
 // Colors
