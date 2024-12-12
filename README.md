@@ -76,7 +76,7 @@ This exercise appears in many language tracks. Since most languages already prov
 
 I also have to mention a great solution to the common task of pretty-printing a custom collection type. I had originally implemented the `String` method with the classic reset-the-prefix approach:
 ```go
-func (s Set) Strin1() string {
+func (s Set) String() string {
 	var b strings.Builder
 	b.WriteByte('{')
 	prefix := ""
