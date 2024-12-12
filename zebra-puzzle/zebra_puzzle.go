@@ -20,7 +20,7 @@ func solve() Solution {
 	pFive := permuteFive()
 	for _, colors := range pFive() {
 		// 6. The green house is immediately to the right of the ivory house.
-		if colors[Green]-colors[Ivory] != 1 {
+		if !(colors[Green]-colors[Ivory] == 1) {
 			continue
 		}
 		for _, nations := range pFive() {
@@ -33,30 +33,31 @@ func solve() Solution {
 			if !ok {
 				continue
 			}
-			for _, pets := range pFive() {
-				// 3. The Spaniard owns the dog.
-				if nations[Spaniard] != pets[Dog] {
+			for _, drinks := range pFive() {
+				// 9. Milk is drunk in the middle house.
+				ok := drinks[Milk] == 2 &&
+					// 4. Coffee is drunk in the green house.
+					drinks[Coffee] == colors[Green] &&
+					// 5. The Ukrainian drinks tea.
+					nations[Ukrainian] == drinks[Tea]
+				if !ok {
 					continue
 				}
-				for _, drinks := range pFive() {
-					// 9. Milk is drunk in the middle house.
-					ok := drinks[Milk] == 2 &&
-						// 4. Coffee is drunk in the green house.
-						drinks[Coffee] == colors[Green] &&
-						// 5. The Ukrainian drinks tea.
-						nations[Ukrainian] == drinks[Tea]
+				for _, smokes := range pFive() {
+					// 8. Kools are smoked in the yellow house.
+					ok := smokes[Kools] == colors[Yellow] &&
+						// 13. The Lucky Strike smoker drinks orange juice.
+						smokes[LuckyStrike] == drinks[OrangeJuice] &&
+						// 14. The Japanese smokes Parliaments.
+						nations[Japanese] == smokes[Parliaments]
 					if !ok {
 						continue
 					}
-					for _, smokes := range pFive() {
-						// 7. The Old Gold smoker owns snails.
-						ok := smokes[OldGold] == pets[Snails] &&
-							// 8. Kools are smoked in the yellow house.
-							smokes[Kools] == colors[Yellow] &&
-							// 13. The Lucky Strike smoker drinks orange juice.
-							smokes[LuckyStrike] == drinks[OrangeJuice] &&
-							// 14. The Japanese smokes Parliaments.
-							nations[Japanese] == smokes[Parliaments] &&
+					for _, pets := range pFive() {
+						// 3. The Spaniard owns the dog.
+						ok := nations[Spaniard] == pets[Dog] &&
+							// 7. The Old Gold smoker owns snails.
+							smokes[OldGold] == pets[Snails] &&
 							// 11. The man who smokes Chesterfields lives in the house next to the man with the fox.
 							nextTo(smokes[Chesterfields], pets[Fox]) &&
 							// 12. Kools are smoked in the house next to the house where the horse is kept.
@@ -80,9 +81,9 @@ func solveBrute() Solution {
 	pFive := permuteFive()
 	for _, colors := range pFive() {
 		for _, nations := range pFive() {
-			for _, pets := range pFive() {
-				for _, drinks := range pFive() {
-					for _, smokes := range pFive() {
+			for _, drinks := range pFive() {
+				for _, smokes := range pFive() {
+					for _, pets := range pFive() {
 						// 1. There are five houses. (Always true.)
 						// 2. The Englishman lives in the red house.
 						ok := nations[Englishman] == colors[Red] &&
