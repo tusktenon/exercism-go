@@ -1,4 +1,4 @@
-# Go on Exercism: Solutions to Exercises
+# Go on Exercism: My Solutions
 
 These are my solutions to the exercises of the [Go track](https://exercism.org/tracks/go) on [Exercism](https://exercism.org).
 

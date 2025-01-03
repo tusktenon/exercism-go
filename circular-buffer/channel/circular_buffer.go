@@ -1,6 +1,6 @@
 // An implementation using a buffered channel. This makes for very concise and
 // readable code, but is probably unwise all the same. Note that "The Go
-// Programming Languages" (p. 233) specifically warns against using a buffered
+// Programming Language" (p. 233) specifically warns against using a buffered
 // channel as a queue, and recommends a slice-based implementation instead.
 //
 // Unsurprisingly, this implementation has far worse performance than either of
